@@ -1,8 +1,11 @@
 package com.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -14,8 +17,8 @@ public class SubCategory {
 	private Long subCategoryId;
 	@Column(name = "SUB_CATEGORY_NAME")
 	private String subCategoryName;
-	@Column(name = "CATEGORY_ID")
-	@ManyToOne
+	@ManyToOne()
+	@JoinColumn(name = "CATEGORY_ID")
 	private Category categoryId;
 
 	public Long getSubCategoryId() {
