@@ -2,10 +2,6 @@ package com.springmvc.dao;
 
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -28,12 +24,10 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	@Override
 	public List<Category> viewListOfCategory() {
-		Session session = sessionFactory.getCurrentSession();
-		CriteriaBuilder cb = session.getCriteriaBuilder();
-		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
-		Root<Category> root = cq.from(Category.class);
-		cq.select(root);
-		Query query = session.createQuery(cq);
-		return query.getResultList();
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<Category> theQuery = currentSession.createQuery("from Category order by categoryName", Category.class);
+		List<Category> categories = theQuery.getResultList();
+		return categories;
+
 	}
 }

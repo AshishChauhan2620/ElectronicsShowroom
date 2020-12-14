@@ -2,31 +2,44 @@ package com.springmvc.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "PRODUCT_DETAILS")
 public class ProductDetails {
+
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PRODUCT_ID")
-	private Long productId;
+	private int productId;
+
 	@Column(name = "BRAND")
 	private String brand;
+
 	@Column(name = "PRICE")
-	private Long price;
+	private int price;
+
 	@Column(name = "YEAR_OF_MANUFACTURING")
 	private int yearOfManufacturing;
-	@Column(name = "SUB_CATEGORY_ID")
-	private Long subCategoryId;
-	@Column(name = "CATEGORY_ID")
-	private Long categoryId;
 
-	public Long getProductId() {
+	@ManyToOne()
+	@JoinColumn(name = "CATEGORY_ID")
+	private Category categoryId;
+	
+	@ManyToOne()
+	@JoinColumn(name = "SUB_CATEGORY_ID")
+	private Category subCategoryId;
+
+	public int getProductId() {
 		return productId;
 	}
 
-	public void setProductId(Long productId) {
+	public void setProductId(int productId) {
 		this.productId = productId;
 	}
 
@@ -38,11 +51,11 @@ public class ProductDetails {
 		this.brand = brand;
 	}
 
-	public Long getPrice() {
+	public int getPrice() {
 		return price;
 	}
 
-	public void setPrice(Long price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 
@@ -54,20 +67,27 @@ public class ProductDetails {
 		this.yearOfManufacturing = yearOfManufacturing;
 	}
 
-	public Long getSubCategoryId() {
-		return subCategoryId;
-	}
-
-	public void setSubCategoryId(Long subCategoryId) {
-		this.subCategoryId = subCategoryId;
-	}
-
-	public Long getCategoryId() {
+	public Category getCategoryId() {
 		return categoryId;
 	}
 
-	public void setCategoryId(Long categoryId) {
+	public void setCategoryId(Category categoryId) {
 		this.categoryId = categoryId;
+	}
+
+	public Category getSubCategoryId() {
+		return subCategoryId;
+	}
+
+	public void setSubCategoryId(Category subCategoryId) {
+		this.subCategoryId = subCategoryId;
+	}
+
+	@Override
+	public String toString() {
+		return "ProductDetails [productId=" + productId + ", brand=" + brand + ", price=" + price
+				+ ", yearOfManufacturing=" + yearOfManufacturing + ", subCategoryId=" + subCategoryId + ", categoryId="
+				+ categoryId + "]";
 	}
 
 }

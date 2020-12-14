@@ -1,10 +1,7 @@
+
 package com.springmvc.dao;
 
 import java.util.List;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,6 +13,8 @@ import com.springmvc.entity.SubCategory;
 
 @Repository
 public class SubCategoryDAOImpl implements SubCategoryDAO {
+	// injecting the session factory
+
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -28,13 +27,12 @@ public class SubCategoryDAOImpl implements SubCategoryDAO {
 
 	@Override
 	public List<SubCategory> viewListOfSubCategory() {
-		Session session = sessionFactory.getCurrentSession();
-		CriteriaBuilder cb = session.getCriteriaBuilder();
-		CriteriaQuery<SubCategory> cq = cb.createQuery(SubCategory.class);
-		Root<SubCategory> root = cq.from(SubCategory.class);
-		cq.select(root);
-		Query query = session.createQuery(cq);
-		return query.getResultList();
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<SubCategory> theQuery = currentSession.createQuery("from SubCategory order by subCategoryNname",
+				SubCategory.class);
+		List<SubCategory> subCategories = theQuery.getResultList();
+		return subCategories;
+
 	}
 
 }

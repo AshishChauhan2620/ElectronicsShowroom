@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -12,12 +15,14 @@ import javax.persistence.Table;
 @Table(name = "CATEGORY")
 public class Category {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "CATEGORY_ID")
-	private Long categoryId;
+	private int categoryId;
+
 	@Column(name = "CATEGORY_NAME")
 	private String categoryName;
-	
-	@OneToMany(mappedBy = "categoryId")
+
+	@OneToMany(mappedBy = "categoryId", fetch = FetchType.EAGER)
 	private List<SubCategory> subCategoryId;
 
 	public List<SubCategory> getSubCategoryId() {
@@ -28,11 +33,11 @@ public class Category {
 		this.subCategoryId = subCategoryId;
 	}
 
-	public Long getCategoryId() {
+	public int getCategoryId() {
 		return categoryId;
 	}
 
-	public void setCategoryId(Long categoryId) {
+	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
 	}
 
@@ -42,6 +47,11 @@ public class Category {
 
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+
+	@Override
+	public String toString() {
+		return "Category [categoryId=" + categoryId + ", categoryName=" + categoryName + "]";
 	}
 
 }

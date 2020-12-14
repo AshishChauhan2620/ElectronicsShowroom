@@ -10,7 +10,6 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-//@EnableJpaRepositories(basePackages = {"com.springmvc"})
 @ComponentScan(basePackages = { "com.springmvc" })
 public class WebMvcConfig implements WebMvcConfigurer{
 

@@ -11,18 +11,18 @@ import com.springmvc.dao.CategoryDAO;
 import com.springmvc.entity.Category;
 
 @Service
+@Transactional
 public class CategoryServiceImpl implements CategoryService {
 	@Autowired
 	private CategoryDAO categoryDAO;
 
 	@Override
-	@Transactional
 	public void addCategory(Category theCategory) {
 		categoryDAO.addCategory(theCategory);
 	}
-	 @Override
-	    @Transactional
-	    public List < Category > viewListOfCategory() {
-	        return categoryDAO.viewListOfCategory();
-	    }
+
+	@Override
+	public List<Category> viewListOfCategory() {
+		return categoryDAO.viewListOfCategory();
+	}
 }

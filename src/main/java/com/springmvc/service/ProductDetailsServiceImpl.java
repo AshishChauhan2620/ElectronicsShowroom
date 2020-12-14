@@ -17,25 +17,21 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
 
 	@Override
 	@Transactional
-	public void addProdcutDetails(ProductDetails theProductDetails) {
-		productDetailsDAO.addProdcutDetails(theProductDetails);
+	public void addProductDetails(ProductDetails theProductDetails) {
+		productDetailsDAO.addProductDetails(theProductDetails);
 	}
 
 	@Override
 	@Transactional
-	public List<ProductDetails> viewInventoryByProductBrand(String productBrand) {
-		return productDetailsDAO.viewInventoryByProductBrand(productBrand);
-
-	}
-
-	@Override
-	public ProductDetails viewInventoryByProductId(Long productId) {
-		return productDetailsDAO.viewInventoryByProductId(productId);
-	}
-
-	@Override
 	public List<ProductDetails> viewInventoryByAllProduct() {
 		return productDetailsDAO.viewInventoryByAllProduct();
+
+	}
+
+	@Override
+	public ProductDetails updateInventoryByProductId(int productId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

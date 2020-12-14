@@ -5,8 +5,10 @@ import java.util.List;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
 import com.springmvc.entity.ProductDetails;
 
@@ -16,34 +18,37 @@ public class ProductDetailsDAOImpl implements ProductDetailsDAO {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public void addProdcutDetails(ProductDetails theProductDetails) {
+	public void addProductDetails(ProductDetails theProductDetails) {
 		Session currentSession = sessionFactory.getCurrentSession();
 		currentSession.save(theProductDetails);
 
 	}
 
 	@Override
-	public List<ProductDetails> viewInventoryByProductBrand(String productBrand) {
+	public String updateProductDetailsByProductId(int productId) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		String sql = "SELECT * FROM PRODUCT_DETAILS WHERE BRAND = :productBrand";
+		String sql = "SELECT * FROM PRODUCT_DETAILS WHERE PRODUCT_ID = :productId";
 		SQLQuery query = currentSession.createSQLQuery(sql);
 		query.addEntity(ProductDetails.class);
-		query.setParameter("productBrand", productBrand);
-		List results = query.list();
-		return results;
+		query.setParameter("productId", productId);
+		if (!CollectionUtils.isEmpty(query.getResultList())) {
+			ProductDetails resultList = (ProductDetails) query.getResultList().get(0);
+			resultList.setPrice(212);
+			currentSession.save(resultList);
+			return "Successful";
+		}
 
-	}
-
-	@Override
-	public ProductDetails viewInventoryByProductId(Long productId) {
-		// TODO Auto-generated method stub
-		return null;
+		return "unsucessfull";
 	}
 
 	@Override
 	public List<ProductDetails> viewInventoryByAllProduct() {
-		// TODO Auto-generated method stub
-		return null;
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<ProductDetails> theQuery = currentSession.createQuery("from ProductDetails order by ID",
+				ProductDetails.class);
+		List<ProductDetails> productDetails = theQuery.getResultList();
+		return productDetails;
+
 	}
 
 }
