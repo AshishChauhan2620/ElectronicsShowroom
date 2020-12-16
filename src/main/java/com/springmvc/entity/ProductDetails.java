@@ -30,10 +30,10 @@ public class ProductDetails {
 	@ManyToOne()
 	@JoinColumn(name = "CATEGORY_ID")
 	private Category categoryId;
-	
+
 	@ManyToOne()
 	@JoinColumn(name = "SUB_CATEGORY_ID")
-	private Category subCategoryId;
+	private SubCategory subCategoryId;
 
 	public int getProductId() {
 		return productId;
@@ -75,11 +75,11 @@ public class ProductDetails {
 		this.categoryId = categoryId;
 	}
 
-	public Category getSubCategoryId() {
+	public SubCategory getSubCategoryId() {
 		return subCategoryId;
 	}
 
-	public void setSubCategoryId(Category subCategoryId) {
+	public void setSubCategoryId(SubCategory subCategoryId) {
 		this.subCategoryId = subCategoryId;
 	}
 

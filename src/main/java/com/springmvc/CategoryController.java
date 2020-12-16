@@ -34,7 +34,7 @@ public class CategoryController {
 
 	@GetMapping("/readExcelUpdateInDB")
 	public void readExcelAndUpdateInDB() {
-		Excel2DatabaseTest.excelData();
+		Excel2DatabaseUtil.excelData();
 
 	}
 

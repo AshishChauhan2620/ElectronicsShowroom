@@ -2,6 +2,7 @@ package com.springmvc;
 
 import java.util.List;
 
+import org.hibernate.annotations.Subselect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
@@ -11,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springmvc.entity.Category;
 import com.springmvc.entity.ProductDetails;
+import com.springmvc.entity.SubCategory;
 import com.springmvc.service.ProductDetailsService;
+import com.springmvc.service.SubCategoryService;
 
 @RestController
 @RequestMapping("/productdetailsapi")
@@ -20,6 +24,9 @@ public class ProductDetailsController {
 
 	@Autowired
 	private ProductDetailsService productDetailsService;
+
+	@Autowired
+	private SubCategoryService subCategoryService;
 
 	@GetMapping("/viewproductdeatilsbyname")
 	public String getProductDetailsByName(Model theModel, String productBrand) {
@@ -30,7 +37,11 @@ public class ProductDetailsController {
 
 	@PostMapping(path = "/addproductdetails", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ProductDetails addProductDetails(@RequestBody ProductDetails theProductDetails) {
-		theProductDetails.setProductId(0);
+		SubCategory subCategory = subCategoryService.viewListOfSubCategory().stream()
+				.filter(p -> p.getSubCategoryName().equals(theProductDetails.getSubCategoryId().getSubCategoryName()))
+				.findFirst().get();
+		theProductDetails.getCategoryId().setCategoryId(subCategory.getCategoryId().getCategoryId());
+		theProductDetails.getSubCategoryId().setSubCategoryId(subCategory.getSubCategoryId());
 		productDetailsService.addProductDetails(theProductDetails);
 		return theProductDetails;
 	}

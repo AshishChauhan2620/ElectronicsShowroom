@@ -28,7 +28,7 @@ public class SubCategoryDAOImpl implements SubCategoryDAO {
 	@Override
 	public List<SubCategory> viewListOfSubCategory() {
 		Session currentSession = sessionFactory.getCurrentSession();
-		Query<SubCategory> theQuery = currentSession.createQuery("from SubCategory order by subCategoryNname",
+		Query<SubCategory> theQuery = currentSession.createQuery("from SubCategory order by subCategoryName",
 				SubCategory.class);
 		List<SubCategory> subCategories = theQuery.getResultList();
 		return subCategories;

@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springmvc.entity.Category;
 import com.springmvc.entity.SubCategory;
+import com.springmvc.service.CategoryService;
 import com.springmvc.service.SubCategoryService;
 
 @RestController
@@ -21,6 +23,8 @@ public class SubCategoryController {
 
 	@Autowired
 	private SubCategoryService subCategoryService;
+	@Autowired
+	private CategoryService categoryService;
 
 	@GetMapping("/viewsubcategory")
 	public List<SubCategory> viewlistOfSubCategory() {
@@ -29,7 +33,9 @@ public class SubCategoryController {
 
 	@PostMapping(path = "/addsubcategory", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public SubCategory addSubCategory(@RequestBody SubCategory subCategory) { //
-		subCategory.setSubCategoryId(0);
+		Category category = categoryService.viewListOfCategory().stream()
+				.filter(p -> p.getCategoryName().equals(subCategory.getCategoryId().getCategoryName())).findFirst().get();
+		subCategory.getCategoryId().setCategoryId(category.getCategoryId());
 		subCategoryService.addSubCategory(subCategory);
 		return subCategory;
 	}
